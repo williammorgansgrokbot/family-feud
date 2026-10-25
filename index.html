@@ -137,6 +137,43 @@ body.port #mir{flex:0 0 370px}
 html,body,#stage,.scr,#ph,.modal{background:#000!important;background-image:none!important}
 body{color:#2a1a0e}
 #gQ .tts{width:30px;height:30px;font-size:15px;border-width:2px}#gQ{padding-right:38px}
+
+/* ---- landscape: keep rows from overflowing (Fast Money) ---- */
+#g{grid-template-rows:38px minmax(0,1fr) 44px}#g>*{min-width:0;min-height:0}#fm{overflow:hidden}
+/* ---- true portrait playfield (phone upright) ---- */
+body.port #g{grid-template-columns:1fr 1fr;grid-template-rows:auto auto minmax(0,1fr) auto;gap:5px;padding:5px}
+body.port #gQ{grid-column:1/3;grid-row:1;font-size:11px;line-height:14px;min-height:62px;padding:6px 50px 6px 8px}
+body.port #gQ .tts{width:42px;height:42px;font-size:20px;border-width:3px}
+body.port #gL{grid-column:1;grid-row:2}body.port #gR{grid-column:2;grid-row:2}
+body.port .side{flex-direction:row;align-items:center;gap:4px}
+body.port .side .score{flex:1 1 auto;padding:2px 4px}
+body.port .pod{flex:0 0 auto;flex-direction:row;align-items:center;gap:3px}
+body.port .pod canvas{display:none}
+body.port .pod .p{width:auto;max-width:64px;font-size:8px;padding:3px 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.port .buzzS{width:46px;height:46px;margin:0;font-size:9px}
+body.port #board,body.port #fm{grid-column:1/3;grid-row:3}
+body.port #board{grid-template-columns:1fr;grid-auto-flow:row;grid-template-rows:repeat(8,minmax(0,1fr))}
+body.port #fm{grid-template-columns:1fr;grid-auto-rows:auto;align-content:start;overflow:auto}
+body.port #gBot{grid-column:1/3;grid-row:4;flex-wrap:wrap;gap:5px;justify-content:center;padding-bottom:4px}
+body.port #gMsg{flex:1 1 100%;order:-1;font-size:10px;line-height:13px;text-align:center}
+body.port #gBtns{flex:1 1 auto;flex-wrap:wrap;gap:5px!important;justify-content:center}
+body.port #gBtns .btn{min-height:46px;font-size:12px;flex:1 1 90px;border-radius:16px}
+body.port #ph{gap:6px}
+body.port #mir{flex:1 1 0;min-height:0}
+body.port #mBoard{min-height:0}
+body.port #phCtl{flex:0 0 auto;justify-content:flex-end;padding-bottom:6px}
+body.port #phBuzz{width:150px;height:150px}
+body.port #hLeft{top:auto;bottom:8px}
+body.port #hPanel{height:auto;bottom:122px}
+body:not(.port) #fm .fr{margin:2px 0}body:not(.port) #fm .fr div{height:17px;line-height:13px}body:not(.port) #fm .fcol{padding:3px 5px}body:not(.port) #fm .ftot{padding:3px}
+body.port #fm .ftot{grid-column:1}body.port #fm .fr{margin:2px 0}body.port #fm .fr div{height:24px;line-height:20px;font-size:10px}body.port #fm .fr div:last-child{width:40px}
+
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#fff4d6;color:#1e120a;border:3px solid #f7c531;border-radius:16px;padding:10px 16px;font:14px LIL,'Arial Black',sans-serif;box-shadow:0 6px 14px rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.hmic{width:34px;height:34px;font-size:16px;border-width:3px}
+body.port .hmic{width:46px;height:46px;font-size:22px}
+body.port #phAns{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px}body.port #phAns #micRow{flex:0 0 auto;order:0}body.port #phIn{flex:1 1 0;min-width:0}body.port #phSend{flex:1 1 100%}
+body:not(.port) #fmIn{width:72px!important}body:not(.port) #gMsg{min-width:44px}
 </style><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script><script src="firebase-config.js"></script><script src="family.js"></script></head><body><div id="stage">
 <!-- HOME -->
 <div class="scr" id="home">
@@ -177,7 +214,7 @@ body{color:#2a1a0e}
   <div id="phTop"><div class="team" id="phTeam">-</div><div class="sub" id="phName"></div><canvas class="spk" id="spkP" width="168" height="90" style="position:static;width:46px;height:25px;margin-left:auto"></canvas></div>
   <div id="phInfo" class="panel">WAITING...</div>
   <button id="phBuzz" disabled>BUZZ</button>
-  <div id="phAns" class="hidden"><div id="micRow"><button id="phMic" class="mic hidden" aria-label="Speak your answer">🎤</button><div id="micSt"></div></div><input id="phIn" maxlength="30" placeholder="TYPE YOUR ANSWER" autocomplete="off"><div id="micAuto" class="hidden"><span id="micHeard"></span><button class="btn" id="micCancel">CANCEL</button></div><button class="btn gold big" id="phSend">SEND</button></div>
+  <div id="phAns" class="hidden"><div id="micRow"><button id="phMic" class="mic" aria-label="Speak your answer">🎤</button><div id="micSt"></div></div><input id="phIn" maxlength="30" placeholder="TYPE YOUR ANSWER" autocomplete="off"><div id="micAuto" class="hidden"><span id="micHeard"></span><button class="btn" id="micCancel">CANCEL</button></div><button class="btn gold big" id="phSend">SEND</button></div>
  </div>
 </div>
 <!-- ONLINE menu / lobby -->
@@ -556,10 +593,10 @@ function render(){if(!S)return;if(ROLE==='player')return renderPhone();var g=$('
   var bd=$('board');if(bd.dataset.k!==S.qi+':'+S.rev.join('')){bd.innerHTML=h;bd.dataset.k=S.qi+':'+S.rev.join('')}}
  $('bank').innerHTML=(S.fm?fmTotal():S.bank)+'<small>'+(S.fm?'FM':'BANK')+'</small>';[].forEach.call($('xs').children,function(s,i){s.className=i<S.strikes?'on':''});$('xs').style.visibility=S.fm?'hidden':'visible';
  $('gMsg').innerHTML=S.msg||'';if(S.last&&!S.fm&&S.mode!=='pp'&&S.last.text)$('gMsg').innerHTML+='<br>“'+esc(S.last.text.toUpperCase())+'” → '+(S.last.rank>=0?'#'+(S.last.rank+1):'X');
- var B=[];if(ROLE!=='host'&&ROLE!=='pp'){}else if(S.fm){if(S.phase==='over')B=[['AGAIN','gold','again'],['HOME','','home']];else{if(!S.fm.run&&S.fm.ans[S.fm.who].length<5)B.push(['START '+(S.fm.who?25:20)+'s','gold','fmgo']);if(S.fm.run){B.push(['<input id="fmIn" placeholder="ANSWER" style="width:90px;height:26px">','raw']);B.push(['SEND','gold','fmsend']);B.push(['PASS','','fmpass'])}if(!S.fm.run&&S.fm.ans[S.fm.who].length>=5)B.push(['REVEAL','gold','fmrev'])}B.push(['UNDO','','undo'])}
+ var B=[];if(ROLE!=='host'&&ROLE!=='pp'){}else if(S.fm){if(S.phase==='over')B=[['AGAIN','gold','again'],['HOME','','home']];else{if(!S.fm.run&&S.fm.ans[S.fm.who].length<5)B.push(['START '+(S.fm.who?25:20)+'s','gold','fmgo']);if(S.fm.run){B.push(['<input id="fmIn" placeholder="ANSWER" style="width:90px;height:26px"><button class="mic hmic" id="fmMic" aria-label="Speak the answer">🎤</button>','raw']);B.push(['SEND','gold','fmsend']);B.push(['PASS','','fmpass'])}if(!S.fm.run&&S.fm.ans[S.fm.who].length>=5)B.push(['REVEAL','gold','fmrev'])}B.push(['UNDO','','undo'])}
  else if(S.phase==='roundEnd')B=[[S.r+1>=S.rounds&&S.scores[0]!==S.scores[1]?'FAST MONEY ▸':'NEXT ROUND ▸','gold','next'],['UNDO','','undo']];
  else B=[['X WRONG','red','x'],['UNDO','','undo'],['QUIT','','quit']];
- var bh=B.map(function(b){return b[1]==='raw'?b[0]:'<button class="btn '+b[1]+'" data-a="'+b[2]+'">'+b[0]+'</button>'}).join('');var gb=$('gBtns');if(gb.dataset.h!==bh){gb.innerHTML=bh;gb.dataset.h=bh;var fi=$('fmIn');if(fi){fi.focus();fi.onkeydown=function(e){if(e.key==='Enter')act('fmsend')}}}else{var c=$('clk')}}
+ var bh=B.map(function(b){return b[1]==='raw'?b[0]:'<button class="btn '+b[1]+'" data-a="'+b[2]+'">'+b[0]+'</button>'}).join('');var gb=$('gBtns');if(gb.dataset.h!==bh){gb.innerHTML=bh;gb.dataset.h=bh;var fi=$('fmIn');if(fi){fi.focus();fi.onkeydown=function(e){if(e.key==='Enter')act('fmsend')};$('fmMic').onclick=hostMic}}else{var c=$('clk')}}
 $('board').onclick=function(e){var t=e.target.closest('.tile');if(!t||!S||t.classList.contains('empty')||t.classList.contains('open'))return;if(ROLE!=='host'&&ROLE!=='pp')return;var i=+t.dataset.i;if(S.phase==='faceoff'&&!S.buzz)return;
  if(S.phase==='faceoff'||S.phase==='play'||S.phase==='steal'){var nm=S.phase==='steal'?'HOST':S.answerer;answer(nm,'',i)}};
 $('fm').onclick=function(e){var r=e.target.closest('.fr');if(r&&(ROLE==='host'||ROLE==='pp'))fmCycle(+r.dataset.w,+r.dataset.i)};
@@ -636,12 +673,15 @@ var SR=window.SpeechRecognition||window.webkitSpeechRecognition,MIC={rec:null,ti
 function micAnswers(){if(!S)return null;var q;if(S.fm){q=FEUD_FM.filter(function(f){return f.q===S.fm.prompt})[0];return q?q.a.map(function(a){return [a,false]}):null}
  q=FEUD_Q.filter(function(f){return f.q===S.q})[0];return q?q.a.map(function(a,i){return [a,!!(S.tiles&&S.tiles[i])]}):null}
 function micPick(alts){var L=micAnswers(),best=null,bs=0;if(L)alts.forEach(function(t,ai){L.forEach(function(x){if(x[1])return;[x[0][0]].concat(x[0][2]||[]).forEach(function(c){var s=sim(t,c)-ai*0.001;if(s>bs){bs=s;best=t}})})});return {text:best||alts[0],hit:!!best}}
-function micUI(){var m=$('phMic');m.classList.toggle('hidden',MIC.off);if(MIC.off&&!$('micSt').textContent&&SR)$('micSt').textContent=''}
+function micUI(){var m=$('phMic');m.classList.remove('hidden');m.classList.toggle('kbd',MIC.off)}
+var DICT_MSG='Tap the keyboard\u2019s 🎤 mic key to talk';
+function toast(t){var e=$('toast');if(!e){e=document.createElement('div');e.id='toast';document.body.appendChild(e)}e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},3200)}
+function dictFallback(inp){toast(DICT_MSG);try{inp.focus();inp.click()}catch(e){}}
 function micNote(t,err){var e=$('micSt');e.textContent=t;e.className=err?'err':''}
 function micCancel(){clearTimeout(MIC.timer);MIC.timer=null;$('micAuto').classList.add('hidden');if(MIC.rec){try{MIC.rec.abort()}catch(e){}}MIC.rec=null;$('phMic').classList.remove('on');micNote('')}
 function micStop(){if(MIC.rec){try{MIC.rec.abort()}catch(e){}}MIC.rec=null;$('phMic').classList.remove('on')}
-function micStart(){if(MIC.off)return;if(MIC.rec){micCancel();return}clearTimeout(MIC.timer);$('micAuto').classList.add('hidden');
- var r;try{r=new SR()}catch(e){MIC.off=true;micUI();micNote('VOICE NOT AVAILABLE — PLEASE TYPE',true);return}
+function micStart(){if(MIC.off){dictFallback($('phIn'));return}if(MIC.rec){micCancel();return}clearTimeout(MIC.timer);$('micAuto').classList.add('hidden');
+ var r;try{r=new SR()}catch(e){MIC.off=true;micUI();dictFallback($('phIn'));return}
  r.lang='en-US';r.interimResults=true;r.maxAlternatives=5;r.continuous=false;MIC.rec=r;var got=false,ak=S&&S.ak;
  $('phMic').classList.add('on');micNote('LISTENING...');$('phIn').value='';
  r.onresult=function(ev){var res=ev.results[ev.results.length-1],t=res[0].transcript.trim();$('phIn').value=t.slice(0,30);
@@ -650,7 +690,7 @@ function micStart(){if(MIC.off)return;if(MIC.rec){micCancel();return}clearTimeou
   $('micHeard').textContent='HEARD: "'+p.text.toUpperCase()+'" — SENDING...';$('micAuto').classList.remove('hidden');
   MIC.timer=setTimeout(function(){MIC.timer=null;$('micAuto').classList.add('hidden');if(S&&S.ak===ak)sendAns()},1000)};
  r.onerror=function(ev){var e=ev.error;micStop();
-  if(e==='not-allowed'||e==='service-not-allowed'){MIC.off=true;micUI();micNote('MIC BLOCKED — TYPE YOUR ANSWER',true)}
+  if(e==='not-allowed'||e==='service-not-allowed'){MIC.off=true;micUI();micNote('MIC BLOCKED — TYPE OR USE KEYBOARD 🎤',true);toast(DICT_MSG);try{$('phIn').focus()}catch(x){}}
   else if(e==='no-speech'){micNote("DIDN'T HEAR ANYTHING — TAP TO TRY AGAIN",true)}else if(e!=='aborted')micNote('VOICE ERROR — TRY AGAIN OR TYPE',true)};
  r.onend=function(){if(MIC.rec===r){MIC.rec=null;$('phMic').classList.remove('on');if(!got&&$('micSt').textContent==='LISTENING...')micNote("DIDN'T HEAR ANYTHING — TAP TO TRY AGAIN",true)}};
  ttsStop();try{r.start()}catch(e){micStop();micNote('VOICE ERROR — TRY AGAIN OR TYPE',true)}}
@@ -676,9 +716,21 @@ function subscribeShared(){var d=db();if(!d)return;d.on('feud/scoreboard',functi
  d.on('familyLooks',function(v){var ch=false;Object.keys(v||{}).forEach(function(k){var l=v[k]||{};if(lkOk(l.head)){var fr=lkFOk(l.front)?l.front:0,o=LOOKS[k];if(!o||o.head!==l.head||(o.front||0)!==fr||o.hand!==l.hand){LOOKS[k]={head:l.head,hand:l.hand,front:fr};ch=true}}});if(ch){sset('wofLooks',JSON.stringify(LOOKS));redrawAv()}});
  d.on('familyExtra',function(v){var ch=false;Object.keys(v||{}).forEach(function(k){var n=nk(v[k]&&v[k].name);if(n&&!EXTRA[n]){EXTRA[n]=1;ch=true}});if(ch){sset('wofExtra',JSON.stringify(Object.keys(EXTRA)));renderRoster()}})}
 // ---------- layout ----------
-function fit(){var iw=innerWidth,ih=innerHeight,port=ih>iw*1.05;document.body.classList.toggle('port',port);var W=port?340:640,H=port?640:296,s=Math.min(iw/W,ih/H);$('stage').style.transform='translate('+Math.round((iw-W*s)/2)+'px,'+Math.round((ih-H*s)/2)+'px) scale('+s+')';lastPod=['',''];try{render()}catch(e){}}
-addEventListener('resize',fit);addEventListener('scroll',function(){if(scrollX||scrollY)scrollTo(0,0)});document.addEventListener('focusin',function(){setTimeout(function(){scrollTo(0,0)},50)});addEventListener('orientationchange',function(){setTimeout(fit,200)});
+function safeIn(){var d=$('safeProbe');if(!d){d=document.createElement('div');d.id='safeProbe';d.style.cssText='position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)';document.body.appendChild(d)}var c=getComputedStyle(d);return [c.paddingTop,c.paddingRight,c.paddingBottom,c.paddingLeft].map(function(v){return parseFloat(v)||0})}
+function fit(){var si=safeIn(),iw=innerWidth-si[1]-si[3],ih=innerHeight-si[0]-si[2],port=ih>iw;document.body.classList.toggle('port',port);var W=port?340:640,H=port?Math.max(600,Math.min(780,Math.round(W*ih/iw))):296,s=Math.min(iw/W,ih/H);var st=$('stage');st.style.height=port?H+'px':'';st.style.transform='translate('+Math.round(si[3]+(iw-W*s)/2)+'px,'+Math.round(si[0]+(ih-H*s)/2)+'px) scale('+s+')';lastPod=['',''];try{render()}catch(e){}}
+addEventListener('resize',fit);addEventListener('orientationchange',function(){setTimeout(fit,120)});if(window.visualViewport)visualViewport.addEventListener('resize',fit);addEventListener('scroll',function(){if(scrollX||scrollY)scrollTo(0,0)});document.addEventListener('focusin',function(){setTimeout(function(){scrollTo(0,0)},50)});addEventListener('orientationchange',function(){setTimeout(fit,200)});
 fit();renderRoster();spkAll();subscribeShared();loop();
+// host / pass-and-play Fast Money mic: fills #fmIn then sends
+var HMIC=null;
+function hostMic(){var inp=$('fmIn'),b=$('fmMic');if(!inp)return;if(HMIC){try{HMIC.abort()}catch(e){}HMIC=null;b&&b.classList.remove('on');return}
+ if(!SR){dictFallback(inp);return}var r;try{r=new SR()}catch(e){dictFallback(inp);return}
+ r.lang='en-US';r.interimResults=true;r.maxAlternatives=5;r.continuous=false;HMIC=r;ttsStop();b.classList.add('on');inp.value='';
+ r.onresult=function(ev){var res=ev.results[ev.results.length-1],t=res[0].transcript.trim();var i2=$('fmIn');if(i2)i2.value=t.slice(0,30);if(!res.isFinal)return;
+  var alts=[];for(var i=0;i<res.length;i++){var a=(res[i].transcript||'').trim();if(a)alts.push(a)}var p=micPick(alts.length?alts:[t]);HMIC=null;
+  i2=$('fmIn');if(i2){i2.value=p.text.slice(0,30);toast('HEARD: "'+p.text.toUpperCase()+'"');setTimeout(function(){if($('fmIn')&&$('fmIn').value)act('fmsend')},900)}};
+ r.onerror=function(e){HMIC=null;var bb=$('fmMic');bb&&bb.classList.remove('on');if(e.error==='not-allowed'||e.error==='service-not-allowed')dictFallback($('fmIn')||inp);else if(e.error!=='aborted')toast("DIDN'T HEAR THAT — TRY AGAIN")};
+ r.onend=function(){if(HMIC===r)HMIC=null;var bb=$('fmMic');bb&&bb.classList.remove('on')};
+ try{r.start()}catch(e){HMIC=null;b.classList.remove('on');dictFallback(inp)}}
 window.FEUD={get S(){return S},set S(v){S=v},answer:answer,hostBuzz:hostBuzz,nextRound:nextRound,fmStart:fmStart,fmAnswer:fmAnswer,fmStop:fmStop,fmReveal:fmReveal,undo:undo,match:match,norm:norm,NET:NET,db:db,commit:commit,get ROLE(){return ROLE},renderSB:renderSB,sbAll:sbAll,act:act};
 })();
 </script></body></html>
