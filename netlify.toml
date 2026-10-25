@@ -1,0 +1,6 @@
+[build]
+  publish = "."
+[[headers]]
+  for = "/firebase-config.js"
+  [headers.values]
+    Cache-Control = "no-cache"
